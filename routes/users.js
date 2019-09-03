@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const User = require('../models/users').User;
+const bcrypt = require('bcryptjs');
+const User = require('../models/users');
+
 
 router.get('/login', (req, res) => {
   res.render('login')
@@ -11,10 +12,15 @@ router.get('/register', (req, res) => {
   res.render('register')
 });
 
+// login
+router.post('/login',(req,res)=>{
+
+})
+
 // Register
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body;
-  console.log(req.body)
+
   var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   let errors = [];
 
@@ -63,10 +69,10 @@ router.post('/register', (req, res) => {
             newUser
               .save()
               .then(user => {
-                req.flash(
-                  'success_msg',
-                  'You are now registered and can log in'
-                );
+                // req.flash(
+                //   'success_msg',
+                //   'You are now registered and can log in'
+                // );
                 res.redirect('/users/login');
               })
               .catch(err => console.log(err));

@@ -27,6 +27,23 @@ app.set('view engine', 'ejs');
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }));
 
+// express-session
+app.use(session({
+  secret: 'meowmeowkitty',
+  resave: true,
+  saveUninitialized: true,
+}))
+
+// connect flash
+  app.use(flash());
+
+// set global variables
+app.use((req,res,next)=>{
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+})
+
+
 // Routes
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/users.js'));

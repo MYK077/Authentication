@@ -1,26 +1,27 @@
 <div>
+  <% include ./partials/messages.js %>
   <form action="/users/register" method="POST">
     <div class="form-group">
       <label for="exampleInputEmail1">User name</label>
       <input type="name" class="form-control"  aria-describedby="emailHelp" placeholder="Enter username"
-      value =  "<%= typeof name != 'undefined' ? name : '' %>" />
+      name= "name" value =  "<%= typeof name != 'undefined' ? name : '' %>" />
       <small id="emailHelp" class="form-text text-muted">Enter username</small>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
       <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email"
-      value = "<%= typeof email != 'undefined' ? email : '' %>" />
+      name= "email" value = "<%= typeof email != 'undefined' ? email : '' %>" />
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Password</label>
       <input type="password" class="form-control"  placeholder="Password"
-      value = "<%= typeof password != 'undefined' ? password : '' %>" />
+      name= "password" value = "<%= typeof password != 'undefined' ? password : '' %>" />
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Confirm Password</label>
       <input type="password" class="form-control"  placeholder="Confirm Password"
-      value = "<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+      name= "password2" value = "<%= typeof password2 != 'undefined' ? password2 : '' %>" />
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
