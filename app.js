@@ -8,6 +8,9 @@ const bodyparser = require('body-parser')
 
 const app = express();
 
+// passport config
+require('./config/passport')(passport)
+
 // DB Config
 const db = require('./config/keys').mongoURI;
 //Connect to MongoDB
@@ -34,20 +37,24 @@ app.use(session({
   saveUninitialized: true,
 }))
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // connect flash
-  app.use(flash());
+app.use(flash());
 
 // set global variables
 app.use((req,res,next)=>{
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
 })
-
 
 // Routes
 app.use('/', require('./routes/index.js'));
 app.use('/users', require('./routes/users.js'));
-
 
 const PORT = process.env.PORT || 3000;
 

@@ -1,4 +1,5 @@
-<form>
+<% include ./partials/messages.js %>
+<form action="/users/login" method="POST" >
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
     <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">

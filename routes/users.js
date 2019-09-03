@@ -1,21 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const passport = require('passport')
+var validator = require("email-validator");
+// user Model
 const User = require('../models/users');
-
-
-router.get('/login', (req, res) => {
-  res.render('login')
-});
 
 router.get('/register', (req, res) => {
   res.render('register')
 });
 
-// login
-router.post('/login',(req,res)=>{
-
-})
+router.get('/login', (req, res) => {
+  res.render('login')
+});
 
 // Register
 router.post('/register', (req, res) => {
@@ -26,6 +23,9 @@ router.post('/register', (req, res) => {
 
   if (!name || !email || !password || !password2) {
     errors.push({ msg: 'Please enter all fields' });
+  }
+  if (!validator.validate("email")){
+    errors.push({msg: 'email is not valid'})
   }
 
   if (!regularExpression.test(password)) {
@@ -69,10 +69,7 @@ router.post('/register', (req, res) => {
             newUser
               .save()
               .then(user => {
-                // req.flash(
-                //   'success_msg',
-                //   'You are now registered and can log in'
-                // );
+                req.flash('success_msg','You are now registered and can log in');
                 res.redirect('/users/login');
               })
               .catch(err => console.log(err));
@@ -85,12 +82,19 @@ router.post('/register', (req, res) => {
 
 // Login
 router.post('/login', (req, res, next) => {
-
+  passport.authenticate('local', {
+  successRedirect: '/dashboard',
+  failureRedirect: '/users/login',
+  failureFlash: true
+  })(req, res, next);
 });
 
-// Logout
-router.get('/logout', (req, res) => {
+// logout
+router.get('/logout',(req,res)=>{
+  req.logout();
+  req.flash('success_msg','you are logged out');
+  res.redirect('/users/login');
+})
 
-});
 
 module.exports = router;
